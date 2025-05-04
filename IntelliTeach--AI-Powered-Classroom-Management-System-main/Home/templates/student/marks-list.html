@@ -1,0 +1,93 @@
+{% extends "admin-layout.html" %}
+
+{% block content %}
+
+<div class="p-3 mb-5 bg-white rounded-2xl">
+    <div class="mb-3">
+        <h4 class="text-base font-semibold">Marks</h4>
+    </div>
+    <div class="">
+        <table id="data-marks" class="table rb_table table-bordered nowrap w-100">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Mst-1 Marks</th>
+                    <th>Mst-2 Marks</th>
+                    <th>Assignment Marks</th>
+                    {% comment %} <th>Total Marks</th> {% endcomment %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for mark in marks %}
+                <tr class="rb-table-row" id="mark">
+                    <td>{{ mark.student.user.get_full_name }}</td>
+                    <td>
+                        {{ mark.mst1 }}
+                    </td>
+                    <td>
+                        {{ mark.mst2 }}
+                    </td>
+                    <td>
+                        {{ mark.assignment }}
+                    </td>
+                    {% comment %} <td>
+                        {{ mark.get_total_marks }}
+                    </td> {% endcomment %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr>
+
+<form class="mt-5 rounded-xl" method="POST" action="{% url "marks" %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table id="data-marks2" class="table-auto table dt-responsive table-bordered nowrap w-100">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Mst-1 Marks</th>
+                <th scope="col">Mst-2 Marks</th>
+                <th scope="col">Assignment Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in marks %}
+            <input type="hidden" value="{{ data.student.id }}" class="form-control" id="id" name="id" required>
+            <tr class="rb-table-row" id="mark-{{ data.student.id }}">
+                {% comment %} {% if data.student_marks_count > 0 %} {% endcomment %}
+                <td>{{ data.student.user.get_full_name }}</td>
+                <td>
+                    <input type="number" value="{{ data.mst1 }}" class="form-control"
+                        id="mst1" name="mst1" >
+                </td>
+                <td>
+                    <input type="number" value="{{ data.mst2 }}" class="form-control"
+                        id="mst2" name="mst2" >
+                </td>
+                <td>
+                    <input type="number" value="{{ data.assignment }}" class="form-control"
+                        id="assignment" name="assignment" >
+                </td>
+                {% comment %} {% else %} {% endcomment %}
+                {% comment %} <td>{{ data.student.user.get_full_name }}</td>
+                <td>
+                    <input type="number" class="form-control" id="mst1" name="mst1" >
+                </td>
+                <td>
+                    <input type="number" class="form-control" id="mst2" name="mst2" >
+                </td>
+                <td>
+                    <input type="number" class="form-control" id="assignment" name="assignment" >
+                </td>
+                {% endif %} {% endcomment %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Save | Update</button>
+</form>
+
+{% endblock %}

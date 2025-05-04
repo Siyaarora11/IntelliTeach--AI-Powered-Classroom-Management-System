@@ -1,0 +1,40 @@
+{% extends 'student_dashboard.html' %}
+
+{% block content %}
+<div class="container mx-auto mt-8">
+    <div class="bg-white dark:bg-slate-950 rounded-xl p-8">
+        <h1 class="text-2xl text-center font-bold mb-6">Assignment Details</h1>
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">{{ assignment.title }}</h3>
+            {% if assignment.due_date <= now %}
+              <p class="text-sm font-bold text-red-500">{{ assignment.due_date }}</p>
+            {% elif assignment.due_date <= now|add:3|date:"Y-m-d" %}
+              <p class="text-sm font-bold text-red-500">{{ assignment.due_date }}</p>
+            {% else %}
+                <p class="text-sm font-semibold text-gray-500">{{ assignment.due_date }}</p>
+            {% endif %}
+        </div>
+        <div class="flex mb-2 space-x-3 items-center">
+            <div class="text-sm text-gray-500"><span class="font-semibold" >Teacher: </span>{{ assignment.teacher }}</div>
+            <div class="text-sm text-gray-500"><span class="font-semibold" > Subject:</span> {{ assignment.teacher.subject }}</div>
+            <div class="text-sm text-gray-500"><span class="font-semibold" > Questions: </span>{{ assignment.question_length }}</div>
+          </div>
+        <p class="text-sm text-slate-600 mb-4">{{ assignment.description }}</p>
+
+        {% for question in assignment.questions.all %}
+            <div class="bg-gray-100 border border-gray-200 rounded-xl p-4 mb-6">
+                <h4 class="text-base font-semibold mb-1">{{ question.question }}</h4>
+                <p class="text-sm mb-2">{{ question.description }}</p>
+                {% if question.attachments %}
+                    <a href="{{ question.attachments.url }}" class="bg-slate-900 text-white py-1 px-4 rounded-xl inline-block" target="_blank">View Attachment</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if not assignment.questions.all %}
+            <p class="text-lg font-semibold">No questions available for this assignment.</p>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

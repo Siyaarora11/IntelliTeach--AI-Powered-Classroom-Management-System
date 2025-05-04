@@ -1,0 +1,22 @@
+{% extends "admin-layout.html" %}
+
+{% block content %}
+<div class="p-3 mb-5 bg-white rounded-2xl">
+    <div class="mb-3 flex justify-between items-center">
+        <h4 class="text-base font-semibold">{{ subject }}</h4>
+    </div>
+    <div class="">
+    {{ html_table | safe }}
+    </div>
+    {% if emp %}
+    <p class="mt-5">
+        No Records Found
+    </p>
+    {% endif %}
+    <script>
+        let tb = document.getElementsByTagName('table')[0];
+        let tr = tb.getElementsByTagName('tr');
+        tr && tr[1].remove();
+    </script>
+</div>
+{% endblock %}

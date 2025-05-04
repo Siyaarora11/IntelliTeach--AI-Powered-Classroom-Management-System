@@ -1,0 +1,102 @@
+{% extends 'admin-layout.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tag }} alert-dismissible fade show" role="alert">
+      {{ message.message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-base">Topics</h2>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudents">
+    Add Topic
+  </button>
+</div>
+<div class="">
+  <table id="data-topics" class="table rb_table dt-responsive table-hover table-bordered nowrap w-100">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Attachments</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for topic in topics %}
+      <tr class="rb-table-row" id="topic-{{ topic.id }}">
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ topic.title }}</td>
+        <td>{% if topic.description %}{{ topic.description }}{% else %}<div class="__">_</div>{% endif %}</td>
+        <td>{% if topic.attachments %}<a href="{{ topic.attachments.url }}" target="_blank">View</a>{% else %}<div class="__">_</div>{% endif %}</td>
+        <td>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+            data-bs-target="#deleteTopic{{ topic.id }}"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+        <div class="modal fade" id="deleteTopic{{ topic.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Delete Topic</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <p>Are you sure you want to delete this topic?</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'delete-topic' topic.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+            </div>
+        </div>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="addStudents" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Topic</h1>
+        {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {%endcomment %}
+      </div>
+      <div class="modal-body">
+            <form method="POST" action="{% url "topics" %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="description">Description (optional)</label>
+                    <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="attachments">Attachments (optional)</label>
+                    <input type="file" class="form-control-file" id="attachments" name="attachments">
+                </div>
+                
+                <button type="submit" class="btn btn-success">Save Topic</button>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

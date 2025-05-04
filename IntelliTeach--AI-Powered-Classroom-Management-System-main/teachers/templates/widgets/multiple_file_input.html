@@ -1,0 +1,9 @@
+<!-- templates/widgets/multiple_file_input.html -->
+{% with field_id=widget.id %}
+  <div class="input-group mb-2">
+    <div class="custom-file">
+      {% comment %} {{ widget }} {% endcomment %}
+      <label class="custom-file-label" for="{{ field_id }}">Choose files</label>
+    </div>
+  </div>
+{% endwith %}

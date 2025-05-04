@@ -1,0 +1,38 @@
+# Ignore database files
+*.sqlite3
+
+# Ignore static files
+/staticfiles/
+/static/**/
+
+# Ignore media files
+# /media/ 
+
+# Ignore virtual environment
+/venv/
+/igg
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore compiled Python files
+*.pyc
+/__pycache__/
+
+# Ignore log files
+*.log
+
+# Ignore environment variables file
+.env
+input.css
+
+# Ignore celery beat schedule
+celerybeat-schedule
+
+# Ignore npm files
+node_modules/
+package-lock.json
+
+# Ignore test files
+test.py

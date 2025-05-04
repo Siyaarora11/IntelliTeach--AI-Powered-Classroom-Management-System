@@ -1,0 +1,146 @@
+{% extends 'admin-layout.html' %}
+
+{% block content %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="p-3 mb-5 bg-white rounded-2xl">
+    <div class="mb-3 flex justify-between items-center">
+        <h4 class="text-base font-semibold">Update Time Table</h4>
+    </div>
+
+    <form id="updateTBL" method="post">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Subject</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in time_table %}
+                <tr>
+                    <td>
+                        <select class="form-select" data-pk="{{ data.id }}" name="day" >
+                            <option value="Monday" {% if data.day == 'Monday' %} selected {% endif %}>Monday</option>
+                            <option value="Tuesday" {% if data.day == 'Tuesday' %} selected {% endif %}>Tuesday</option>
+                            <option value="Wednesday" {% if data.day == 'Wednesday' %} selected {% endif %}>Wednesday</option>
+                            <option value="Thursday" {% if data.day == 'Thursday' %} selected {% endif %}>Thursday</option>
+                            <option value="Friday" {% if data.day == 'Friday' %} selected {% endif %}>Friday</option>
+                            {% if weekends %}
+                            <option value="Saturday" {% if data.day == 'Saturday' %} selected {% endif %}>Saturday</option>
+                            <option value="Sunday" {% if data.day == 'Sunday' %} selected {% endif %}>Sunday</option>
+                            {% endif %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="time" data-pk="{{ data.id }}" value="{{ data.time_from }}" name="from" >
+                    </td>
+                    <td>
+                        <input type="time" data-pk="{{ data.id }}" value="{{ data.time_to }}" name="to" >
+                    </td>
+                    <td>
+                        <input type="text" data-pk="{{ data.id }}" value="{{ data.subject }}" name="subject" >
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       
+        <button id="stbtn" type="submit" class="btn btn-success">Update</button>
+    </form>
+
+    <p class="mt-4 text-sm"> 
+        All changes will be saved once you click the update button.
+        To remove any row type 'None' in subject column
+    </p>
+
+    <script>
+
+        // Function to get form values
+        function getFormValues() {
+            var form = document.querySelector('form');
+            var inputs = form.querySelectorAll('input, select');
+            var values = []
+
+            inputs.forEach(function(input) {
+                let pk = input.getAttribute('data-pk')
+                if (!pk) {
+                    return
+                }
+                let name = input.getAttribute('name')
+                let value = input.value
+                if (values.find(x => x.pk === pk)) {
+                    values.find(x => x.pk === pk)[name] = value
+                } else {
+                    values.push({pk: pk, [name]: value})
+                }
+            });
+
+            return values;
+        }
+
+        document.getElementById("updateTBL").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            btn = document.getElementById("stbtn");
+            var formValues = getFormValues();
+            let csrf = await cookieStore.get("csrftoken");
+            csrf = await csrf.value;  
+            btn.disabled = true;
+            let get = fetch("{% url 'update_time_table' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrf
+                },
+                body: JSON.stringify(formValues)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Time Table updated successfully");
+                    window.location.reload();
+                } else {
+                    btn.disabled = false;
+                    alert("Failed to update Time Table");
+                }
+            })
+        });
+    </script>
+
+    
+    
+</div>
+{% endblock %}

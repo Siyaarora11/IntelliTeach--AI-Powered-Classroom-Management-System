@@ -1,0 +1,189 @@
+{% extends 'admin-layout.html' %}
+
+{% load static %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tag }} alert-dismissible fade show" role="alert">
+  {{ message.message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-base">Assignments</h2>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudents">
+    Add Assignment
+  </button>
+</div>
+<div class="grid grid-cols-1 gap-4">
+  {% for assignment in assignments %}
+  <a href="{% url "assignment" assignment.id %}">
+  <div class="p-4 bg-white relative shadow-md rounded-2xl">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">{{ assignment.title }}</h3>
+      
+      {% if assignment.due_date <= now %}
+        <p class="text-sm font-bold text-red-500">{{ assignment.due_date }}</p>
+      {% elif assignment.due_date <= now|add:3|date:"Y-m-d" %}
+        <p class="text-sm font-bold text-red-500">{{ assignment.due_date }}</p>
+      {% else %}
+        <p class="text-sm font-semibold text-gray-500">{{ assignment.due_date }}</p>
+      {% endif %}
+    </div>
+    <div class="mb-4">
+      {% if assignment.description %}
+      <p>{{ assignment.description }}</p>
+      {% else %}
+      <div class="text-gray-400">No description available</div>
+      {% endif %}
+    </div>
+    <div class="text-sm text-gray-500">Questions: {{ assignment.question_length }}</div>
+    <button type="button" class="bg-red-800 rounded-xl absolute right-5 bottom-5 text-white px-3 py-1 font-semibold text-sm"><a href="{% url "assignment-delete" assignment.id %}" >Delete</a></button>
+  </div>
+  </a>
+  {% endfor %}
+</div>
+
+<div class="modal fade" id="addStudents" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Assignment</h1>
+        {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {%endcomment %}
+      </div>
+      <div class="modal-body">
+            <form id="assignmentForm" enctype="multipart/form-data">
+                <!-- Assignment Details -->
+                <div class="form-group mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="description">Description (optional)</label>
+                    <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="dueDate">Due Date</label>
+                    <input type="datetime-local" class="form-control" id="dueDate" name="dueDate" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="attachments">Attachments (optional)</label>
+                    <input type="file" class="form-control-file" id="attachments" name="attachments">
+                </div>
+        
+                <!-- Assignment Questions -->
+                <div class="form-group mb-3">
+                    <label class="form-label" for="questions">Questions</label>
+                    <div id="questionsContainer">
+                        <!-- Questions will be dynamically added here -->
+                    </div>
+                </div>
+                <div class="flex mt-2 justify-start space-x-2 items-center">
+                <button id="rBTN1" type="button" class="btn btn-primary" onClick="addQuestion()" >Add Question</button>
+    
+                <button id="rBTN2" type="submit" class="btn btn-success">Save Assignment</button>
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button id="rBTN3" type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard</button>
+      </div>
+      <script>
+        function addQuestion() {
+            const questionsContainer = document.getElementById("questionsContainer");
+    
+            // Create question div
+            const questionDiv = document.createElement("div");
+            questionDiv.className = "question-div";
+    
+            // Add Title field
+            const titleField = document.createElement("input");
+            titleField.type = "text";
+            titleField.className = "form-control mt-2";
+            titleField.placeholder = "Enter question title";
+            titleField.name = "questionTitles";
+            questionDiv.appendChild(titleField);
+
+            // Add description field
+            const descriptionField = document.createElement("textarea");
+            descriptionField.className = "form-control mt-2";
+            descriptionField.placeholder = "Enter question description (optional)";
+            descriptionField.name = "questionDescriptions";
+            questionDiv.appendChild(descriptionField);
+    
+            // Add attachments field
+            const attachmentsField = document.createElement("input");
+            attachmentsField.type = "file";
+            attachmentsField.className = "form-control-file mt-2";
+            attachmentsField.name = "questionAttachments";
+            questionDiv.appendChild(attachmentsField);
+    
+            // Add remove question button
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.className = "btn btn-danger mt-2";
+            removeButton.textContent = "Remove Question";
+            removeButton.onclick = function () {
+                questionsContainer.removeChild(questionDiv);
+            };
+            questionDiv.appendChild(removeButton);
+    
+            // Append question div to container
+            questionsContainer.appendChild(questionDiv);
+        }
+        
+        let btn1 = document.getElementById("rBTN1");
+        let btn2 = document.getElementById("rBTN2");
+        let btn3 = document.getElementById("rBTN3");
+        
+        try {
+            document.getElementById("assignmentForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            btn1.disabled = true; btn2.disabled = true; btn3.disabled = true;
+            const formData = new FormData(this);
+    
+            const questionDivs = document.getElementsByClassName("question-div");
+            Array.from(questionDivs).forEach(function (questionDiv, index) {
+                formData.append("questionTitles", questionDiv.querySelector("input[type='text']").value);
+                formData.append("questionDescriptions", questionDiv.querySelector("textarea").value);
+                formData.append("questionAttachments", questionDiv.querySelector("input[type='file']").files[0]);
+            });
+    
+            // Make a POST request with the form data
+                let csrf = await cookieStore.get("csrftoken");
+                csrf = await csrf.value;             
+                fetch("{% url "assignments" %}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRFToken': csrf,
+                    },
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Assignment added successfully");
+                        window.location.reload();
+                    } else {
+                        btn1.disabled = false; btn2.disabled = false; btn3.disabled = false;
+                        alert("Failed to add assignment");
+                    }
+                    console.log(data);
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        } catch (error) {
+            btn1.disabled = false; btn2.disabled = false; btn3.disabled = false;
+            console.error(error);
+        } finally {
+            btn1.disabled = false; btn2.disabled = false; btn3.disabled = false;
+        }
+    </script>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

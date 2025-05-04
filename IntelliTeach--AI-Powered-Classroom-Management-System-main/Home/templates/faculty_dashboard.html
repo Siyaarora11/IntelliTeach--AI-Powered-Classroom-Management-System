@@ -1,0 +1,301 @@
+{% extends 'admin-layout.html' %}
+
+{% block content %}
+
+<div class="flex py-4 flex-wrap justify-center lg:justify-between space-y-4 sm:space-x-2 sm:space-y-0 lg:space-x-6">
+  <div
+      class="w-60 lg:ml-5 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+      <a href="{% url "student" %}" class="h-60 w-60 relative flex justify-end flex-col">
+        <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+              <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0zm0 416c-88.4 0-160-71.6-160-160S135.6 96 224 96s160 71.6 160 160-71.6 160-160 160zm0-288c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 224c-52.9 0-96-43.1-96-96s43.1-96 96-96 96 43.1 96 96-43.1 96-96 96z"/>
+              </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Add
+                  Students</p>
+          </div>
+      </a>
+  </div>
+  <div data-bs-toggle="modal" data-bs-target="#addMST1"
+      class="w-60 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+      <a href="#" class="h-60 w-60 relative flex justify-end flex-col">
+        <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+            <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+            <path
+                d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm64 192c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm64-64c0-17.7 14.3-32 32-32s32 14.3 32 32V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V160zM320 288c17.7 0 32 14.3 32 32v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32z" />
+            </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Mst-1 Marks</p>
+          </div>
+      </a>
+  </div>
+  <div data-bs-toggle="modal" data-bs-target="#addMST2"
+      class="w-60 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+      <a href="#" class="h-60 w-60 relative flex justify-end flex-col">
+        <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+            <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+            <path
+                d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm64 192c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm64-64c0-17.7 14.3-32 32-32s32 14.3 32 32V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V160zM320 288c17.7 0 32 14.3 32 32v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32z" />
+        </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Mst-2 Marks</p>
+          </div>
+      </a>
+  </div>
+  <div data-bs-toggle="modal" data-bs-target="#addAssign"
+      class="w-60 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+      <a href="#" class="h-60 w-60 relative flex justify-end flex-col">
+        <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+            <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+            <path
+                d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm64 192c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm64-64c0-17.7 14.3-32 32-32s32 14.3 32 32V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V160zM320 288c17.7 0 32 14.3 32 32v32c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32z" />
+        </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Assignment Marks</p>
+          </div>
+      </a>
+  </div>
+  <div
+      class="w-60 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+      <a href="{% url "assignments" %}" class="h-60 relative w-60 flex justify-end flex-col">
+        <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+          <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+            <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+        </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+            <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512">
+            <path
+                d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+            </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Assignment Questions</p>
+          </div>
+      </a>
+  </div>
+  <div class="w-60 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+      <a href="{% url "topics" %}" class="h-60 relative w-60 flex justify-end flex-col">
+          <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+            <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 576 512">
+            <path
+                d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.7 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z" />
+            </svg>
+            <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Important Topics</p>
+          </div>
+      </a>
+  </div>
+</div>
+
+<div class="mt-5 border border-slate-300 overflow-hidden rounded-2xl">
+  <div class="mb-4 mt-2 text-xl text-center font-bold">
+    Student Enquiries
+  </div>
+  {%if queries %}
+    {%for query in queries %}
+      <a href="{% url "query" query.id %}">
+      <div class="flex flex-col justify-between bg-white dark:bg-slate-800 p-4 mx-4 rounded-xl shadow-sm mb-4">
+        <div class="flex justify-between items-center ">
+          <div class="flex">
+            <img src="{{ query.student.user.picture.url }}" alt="profile" class="w-12 h-12 rounded-full">
+            <div class="flex flex-col ml-4">
+            <div class="flex items-center space-x-5">
+              <span class="text-xs font-semibold dark:text-gray-400">{{ query.student.user.get_full_name}}</span>
+              <span class="text-xs font-semibold dark:text-gray-400">{{ query.created_at|date:"d M Y" }}</span>
+              <span class="text-xs font-semibold dark:text-gray-400"> <span class="font-bold"> Replies </span> {{ query.student_query_answers.all.count }}</span>
+            </div>
+            <h2 class="text-base font-bold dark:text-gray-200">{{ query.title }}</h2>
+          </div>
+          </div>
+          <div class="flex items-center">
+            <a type="button"  class="bg-slate-900 text-sm text-white px-4 py-1 rounded-xl" data-bs-toggle="modal" data-bs-target="#addReplies{{query.id}}">Reply</a>
+          </div>
+        </div>
+        {% comment %} <p class="text-sm dark:text-gray-200">{{ query.student.student_query_answers.count }}</p> {% endcomment %}
+      </div>
+      </a>
+
+      <div class="modal fade" id="addReplies{{query.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateStudentLable" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateStudentLable">Reply to {{query.student.user.get_full_name }}</h1>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url "query-repliy" %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="query_id" value="{{ query.id }}">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="des" name="answer"> </textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info mt-4">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    {% if queries.count > 5 %}
+      <div class="flex mt-5 w-full py-2 bg-slate-900 justify-center">
+        <a href="{% url "queries" %}" class="text-slate-50 dark:text-slate-200">View All</a>
+        {% comment %} {% url "queries" %} {% endcomment %}
+      </div>
+    {% endif %}
+  {%else%}
+    <p class="text-center mb-2 dark:text-gray-200">No Queries Found</p>
+  {% endif %}
+</div>
+
+
+
+<div class="modal fade" id="addMST1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateStudentLable" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="bg-slate-900 text-center text-white py-2"> Mst1 Marks </div>
+          <form class="rounded-xl" method="POST" action="{% url "mst1" %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <table id="data-mst1" class="table-auto table dt-responsive table-bordered nowrap w-100">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Mst-1 Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in student_data %}
+                        <input type="hidden" value="{{ data.student.id }}" class="form-control" id="id" name="id" required>
+                        <tr class="rb-table-row" id="mark-{{ data.student.id }}">
+                            {% if data.student_marks_count > 0 %}
+                                <td>{{ data.student.user.get_full_name }}</td>
+                                <td>
+                                    <input type="number" value="{{ data.student.student_marks.first.mst1 }}" class="form-control" id="mst1" name="mst1" required>
+                                </td>
+                            {% else %}
+                                <td>{{ data.student.user.get_full_name }}</td>
+                                <td>
+                                    <input type="number" class="form-control" id="mst1" name="mst1" required>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <div class="mt-5 flex items-center">
+                <button type="button" class="btn btn-danger w-full !rounded-none" data-bs-dismiss="modal">Go Back</button>
+                <button type="submit" class="btn btn-primary w-full !rounded-none">Save | Update</button>
+                </div>
+              </form>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="addMST2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateStudentLable" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="bg-slate-900 text-center text-white py-2"> Mst2 Marks </div>
+          <form class="rounded-xl" method="POST" action="{% url "mst2" %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <table id="data-mst1" class="table-auto table dt-responsive table-bordered nowrap w-100">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Mst-2 Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in student_data %}
+                        <input type="hidden" value="{{ data.student.id }}" class="form-control" id="id" name="id" required>
+                        <tr class="rb-table-row" id="mark-{{ data.student.id }}">
+                            {% if data.student_marks_count > 0 %}
+                                <td>{{ data.student.user.get_full_name }}</td>
+                                <td>
+                                    <input type="number" value="{{ data.student.student_marks.first.mst2 }}" class="form-control" id="mst2" name="mst2" required>
+                                </td>
+                            {% else %}
+                                <td>{{ data.student.user.get_full_name }}</td>
+                                <td>
+                                    <input type="number" class="form-control" id="mst2" name="mst2" required>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <div class="mt-5 flex items-center">
+                <button type="button" class="btn btn-danger w-full !rounded-none" data-bs-dismiss="modal">Go Back</button>
+                <button type="submit" class="btn btn-primary w-full !rounded-none">Save | Update</button>
+                </div>
+              </form>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="addAssign" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateStudentLable" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="bg-slate-900 text-center text-white py-2"> Assignment Marks </div>
+          <form class="rounded-xl" method="POST" action="{% url "assmarks" %}" enctype="multipart/form-data">
+              {% csrf_token %}
+              <table id="data-assignment" class="table-auto table dt-responsive table-bordered nowrap w-100">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Assignment Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in student_data %}
+                        <input type="hidden" value="{{ data.student.id }}" class="form-control" id="id" name="id" required>
+                        <tr class="rb-table-row" id="mark-{{ data.student.id }}">
+                            {% if data.student_marks_count > 0 %}
+                                <td>{{ data.student.user.get_full_name }}</td>
+                                <td>
+                                    <input type="number" value="{{ data.student.student_marks.first.assignment }}" class="form-control" id="assignment" name="assignment" required>
+                                </td>
+                            {% else %}
+                                <td>{{ data.student.user.get_full_name }}</td>
+                                <td>
+                                    <input type="number" class="form-control" id="assignment" name="assignment" required>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <div class="mt-5 flex items-center">
+                <button type="button" class="btn btn-danger w-full !rounded-none" data-bs-dismiss="modal">Go Back</button>
+                <button type="submit" class="btn btn-primary w-full !rounded-none">Save | Update</button>
+                </div>
+              </form>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

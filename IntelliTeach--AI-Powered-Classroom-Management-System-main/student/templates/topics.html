@@ -1,0 +1,67 @@
+{% extends 'student_dashboard.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tag }} alert-dismissible fade show" role="alert">
+      {{ message.message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-base">Topics</h2>
+</div>
+<div class="">
+  <table id="data-topics" class="table rb_table dt-responsive table-hover table-bordered nowrap w-100">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Teacher</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Description</th>
+        <th scope="col">Attachments</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for topic in topics %}
+      <tr class="rb-table-row" id="topic-{{ topic.id }}">
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ topic.title }}</td>
+        <td>{{ topic.teacher.subject }}</td>
+        <td>{{ topic.teacher.user.get_full_name }}</td>
+        <td>{% if topic.description %}{{ topic.description }}{% else %}<div class="__">_</div>{% endif %}</td>
+        <td>{% if topic.attachments %}<a href="{{ topic.attachments.url }}" target="_blank">View</a>{% else %}<div class="__">_</div>{% endif %}</td>
+        <td>
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+            data-bs-target="#ViewTopic{{ topic.id }}">view</button>
+        </td>
+      </tr>
+        <div class="modal fade" id="ViewTopic{{ topic.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{topic.title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <p>{{ topic.description }}</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

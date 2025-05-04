@@ -1,0 +1,256 @@
+@import url('https://rb-fonts-ravikantsaini047-dc0ad04cad6ed45f64763192ab88a4e9b16cc.gitlab.io/data/v2/css/rb-fonts.css');
+
+body {
+    /* font-family: 'rb-franklin', 'Arial', sans-serif !important; */
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-main {
+    /* background-image: url('https://cdn.vectorstock.com/i/preview-1x/44/27/chemistry-cabinet-classroom-laboratory-interior-vector-45094427.webp'); */
+    background-size: cover;
+    background-color: rgb(6, 6, 46);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-main-wrapper {
+    position: relative;
+    width: 100%;
+    /* backdrop-filter: blur(20px); */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-container {
+    position: absolute;
+    background-color: rgba(42, 47, 85, 0.5);
+    /* padding: 20px; */
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+    width: 700px;
+    height: calc(100vh - 150px);
+    /* display: flex; */
+    backdrop-filter: blur(60px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.main-scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.main-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4e4e4e63;
+    border-radius: 10px;
+    border: 2px solid #fff;
+    transition: all 0.3s ease;
+}
+
+.main-scrollbar::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.main-scrollbar::-webkit-scrollbar-track:hover {
+    background-color: #f4f4f4;
+}
+
+.main-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #4e4e4e;
+}
+
+.main-scrollbar {
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+/* .auth-container .auth-form {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+} */
+
+.rb-nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: block;
+}
+
+.rb-nav-link {
+    transition: all 0.3s ease !important;
+}
+
+.rb-nav-link:hover {
+    background-color: #adadad;
+    color: #000000 !important;
+}
+
+.rb-nav-link i {
+    margin-right: 5px;
+}
+
+.rb-nav-link .span {
+    font-weight: 600 !important;
+    font-family: 'rb-franklin' !important;
+}
+
+.student-list-img {
+    width: 34px;
+    height: 34px;
+    border-radius: 1000px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.rb-table-row {
+    transition: all 0.3s ease;
+}
+
+.__ {
+    text-align: center !important;
+}
+
+.roll_link {
+    cursor: pointer;
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+.roll_link:hover {
+    color: #000000 !important;
+    text-decoration: underline;
+}
+
+.table_image {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+input {
+    border-radius: 5px !important;
+}
+
+.rb-dropdown {
+    left: -100px !important;
+    max-width: 250px !important;
+    min-width: 210px !important;
+}
+
+.rb-notice {
+    min-width: 250px;
+    position: fixed;
+    overflow-y: hidden;
+} 
+
+.rb-nt-sc {
+    position: relative;
+    max-height: calc(100vh - 200px);
+    min-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.z-i9999 {
+    z-index: 9999;
+}
+
+.rb-tbh, .rb-tbh th, .rb-tbh td {
+    background-color: #faf3f3 !important;
+    color: #352d2d;
+}
+
+.rb-c-chart {
+    width: 250px !important;
+    height: 250px !important;
+}
+
+.rb-l-chart {
+    width: auto !important;
+    height: 250px !important;
+}
+
+@media(min-width: 576px) {
+    .rb-mdl {
+        max-width: fit-content !important;
+    }
+}
+
+.rb-lex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.rb-pic {
+    width: 48px;
+    height: 48px;
+    border-radius: 1000px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .rb-notice {
+        position: relative;
+        max-height: auto;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: visible;
+    }
+    .rb-l-chart {
+        width: 100% !important;
+        height: 250px !important;
+    }
+    .rb-lex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+img {
+    object-fit: cover;
+}
+
+@keyframes faceRecognitionAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.face-recognition-animation {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    background-color: #007bff; /* Change color as needed */
+    border-radius: 50%;
+    animation: faceRecognitionAnimation 1.5s infinite;
+    display: none;
+    visibility: hidden;
+}
+
+.active {
+    display: block !important;
+    visibility: visible !important;
+}

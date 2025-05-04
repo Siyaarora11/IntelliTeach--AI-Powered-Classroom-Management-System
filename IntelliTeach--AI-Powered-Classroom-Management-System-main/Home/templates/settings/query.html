@@ -1,0 +1,86 @@
+{% extends template %}
+
+
+{% block content %}
+    <div class="mb-4 mt-2 text-xl text-center font-bold">
+        <h1>Query Details</h1>
+    </div>
+    <div class="flex flex-col justify-between bg-white dark:bg-slate-800 p-4 mx-4 rounded-xl shadow-sm mb-4">
+      <div class="flex justify-between items-center ">
+        <div class="flex">
+          <img src="{{ query.student.user.picture.url }}" alt="profile" class="w-12 h-12 rounded-full">
+          <div class="flex flex-col ml-4">
+          <div class="flex items-center space-x-5">
+            <span class="text-xs font-semibold dark:text-gray-400">{{ query.student.user.get_full_name}}</span>
+            <span class="text-xs font-semibold dark:text-gray-400">{{ query.created_at|date:"d M Y" }}</span>
+          </div>
+          <h2 class="text-base font-bold dark:text-gray-200">{{ query.title }}</h2>
+        </div>
+        </div>
+        {% if not user.is_student %}
+        <div class="flex items-center">
+            <a type="button"  class="bg-slate-900 text-sm text-white px-4 py-1 rounded-xl" data-bs-toggle="modal" data-bs-target="#addReplies{{query.id}}">Reply</a>
+        </div>
+        {% endif %}
+      </div>
+        <div class="mt-4">
+            <p class="text-sm dark:text-gray-200">{{ query.description }}</p>
+        </div>
+    </div>
+
+    <div class="mb-4 mt-2 text-xl text-center font-bold">
+        <h1>Replies ( {{query.student_query_answers.all.count}} )</h1>
+    </div>
+    {% if query.student_query_answers.all|length == 0 %}
+        <div class="flex flex-col justify-between bg-white dark:bg-slate-800 p-4 mx-4 rounded-xl shadow-sm mb-4">
+            <div class="flex justify-between items-center ">
+                <div class="flex">
+                    <div class="flex flex-col ml-4">
+                        <h2 class="text-base font-bold dark:text-gray-200">No Replies Yet</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+    {% for reply in query.student_query_answers.all %}
+    <div class="flex flex-col justify-between bg-white dark:bg-slate-800 p-4 mx-4 rounded-xl shadow-sm mb-4">
+        <div class="flex justify-between items-center ">
+            <div class="flex">
+                <img src="{{ reply.teacher.user.picture.url }}" alt="profile" class="w-12 h-12 rounded-full">
+                <div class="flex flex-col ml-4">
+                    <div class="flex items-center space-x-5">
+                        <span class="text-xs font-semibold dark:text-gray-400">{{ reply.teacher.user.get_full_name}}</span>
+                        <span class="text-xs font-semibold dark:text-gray-400">{{ reply.created_at|date:"d M Y" }}</span>
+                    </div>
+                    <h2 class="text-sm mt-1 font-semibold text-gray-800">{{ reply.answer }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if not user.is_student %}
+    <div class="modal fade" id="addReplies{{query.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateStudentLable" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateStudentLable">Reply to {{query.student.user.get_full_name }}</h1>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{% url "query-repliy" %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="query_id" value="{{ query.id }}">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="des" name="answer"> </textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info mt-4">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+{% endblock %}

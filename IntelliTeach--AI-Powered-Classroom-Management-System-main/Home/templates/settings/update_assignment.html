@@ -1,0 +1,173 @@
+{% extends "admin-layout.html" %}
+
+{% load static %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-{{ message.tag }} alert-dismissible fade show" role="alert">
+      {{ message.message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-2xl font-extraBold mb-5">Update Assignment</h2>
+  <button type="button" class="btn btn-primary" onClick="window.location.back()" >
+    Go Back
+  </button>
+</div>
+
+        
+            <form id="assignmentForm" enctype="multipart/form-data" action="{% url 'update-assignment' assignment.id %}" method="post">
+                {% csrf_token %}
+                <!-- Assignment Details -->
+                <input type="hidden" name="id" id="id"/>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input type="text" value="{{ assignment.title }}" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="description">Description (optional)</label>
+                    <textarea class="form-control" id="description" name="description" rows="4">{{ assignment.description  }}</textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="dueDate">Due Date</label>
+                    <input type="datetime-local" value="{{ assignment.due_date|default:"" | date:'Y-m-d\TH:i' }}" class="form-control" id="dueDate" name="dueDate" required>
+                {% if not assignment.attachments %}
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="attachments">Attachments (optional)</label>
+                        <input type="file" class="form-control-file" id="attachments" name="attachments">
+                    </div>
+                {% else %}
+                    <div class="form-group mb-3">
+                        <label class="form-label d-block" for="attachments">Attachments</label>
+                            <a href="{{ assignment.attachments.url }}" target="_blank">{{ assignment.attachments.name }}</a>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="attachments">Change Attachments (optional)</label>
+                        <input type="file" class="form-control-file" id="attachments" name="attachments">
+                    </div>
+                {% endif %}
+        
+                <!-- Assignment Questions -->
+                <div class="form-group mb-3">
+                    <label class="form-label" for="questions">Questions</label>
+                    <div id="questionsContainer">
+                        {% for question in assignment.questions.all %}
+                            <div class="question-div">
+                                <input type="hidden" value="{{question.id}}" name="_id" />
+                                <input type="text" value="{{ question.question }}" class="form-control mt-2" placeholder="Enter question title" name="questionTitles">
+                                <textarea class="form-control mt-2" placeholder="Enter question description (optional)" name="questionDescriptions">{{ question.description }}</textarea>
+                                <input type="file" class="form-control-file mt-2" name="questionAttachments">
+                                <button type="button" class="btn btn-danger mt-2" onclick="this.parentElement.remove()">Remove Question</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="flex mt-2 justify-start space-x-2 items-center">
+                <button id="rBTN1" type="button" class="btn btn-primary" onClick="addQuestion()" >Add Question</button>
+    
+                <button id="rBTN2" type="submit" class="btn btn-success">Save Assignment</button>
+                </div>
+            </form>
+ 
+      <script>
+        function addQuestion() {
+            const questionsContainer = document.getElementById("questionsContainer");
+    
+            // Create question div
+            const questionDiv = document.createElement("div");
+            questionDiv.className = "question-div";
+    
+            // Add Title field
+            const titleField = document.createElement("input");
+            titleField.type = "text";
+            titleField.className = "form-control mt-2";
+            titleField.placeholder = "Enter question title";
+            titleField.name = "questionTitles";
+            questionDiv.appendChild(titleField);
+
+            // Add description field
+            const descriptionField = document.createElement("textarea");
+            descriptionField.className = "form-control mt-2";
+            descriptionField.placeholder = "Enter question description (optional)";
+            descriptionField.name = "questionDescriptions";
+            questionDiv.appendChild(descriptionField);
+    
+            // Add attachments field
+            const attachmentsField = document.createElement("input");
+            attachmentsField.type = "file";
+            attachmentsField.className = "form-control-file mt-2";
+            attachmentsField.name = "questionAttachments";
+            questionDiv.appendChild(attachmentsField);
+    
+            // Add remove question button
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.className = "btn btn-danger mt-2";
+            removeButton.textContent = "Remove Question";
+            removeButton.onclick = function () {
+                questionsContainer.removeChild(questionDiv);
+            };            
+            questionDiv.appendChild(removeButton);
+    
+            // Append question div to container
+            questionsContainer.appendChild(questionDiv);
+        }
+        
+        let btn1 = document.getElementById("rBTN1");
+        let btn2 = document.getElementById("rBTN2");
+        
+        try {
+            document.getElementById("assignmentForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            btn1.disabled = true; btn2.disabled = true;
+            const formData = new FormData(this);
+    
+            const questionDivs = document.getElementsByClassName("question-div");
+            Array.from(questionDivs).forEach(function (questionDiv, index) {
+                if (questionDiv.querySelector("input[type='hidden']")) {
+                    formData.append("questionIds", questionDiv.querySelector("input[type='hidden']").value);
+                } else {
+                    formData.append("questionIds", "");
+                }
+                formData.append("questionTitles[]", questionDiv.querySelector("input[type='text']").value);
+                formData.append("questionDescriptions[]", questionDiv.querySelector("textarea").value);
+                const attachmentsField = questionDiv.querySelector("input[type='file']");
+                formData.append("questionAttachments[]", questionDiv.querySelector("input[type='file']").files[0]);                           
+            });
+    
+            // Make a POST request with the form data
+                let csrf = await cookieStore.get("csrftoken");
+                csrf = await csrf.value;             
+                fetch("{% url "update-assignment" assignment.id %}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRFToken': csrf,
+                    },
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Assignment updated");
+                        window.location.reload();
+                    } else {
+                        btn1.disabled = false; btn2.disabled = false;
+                        alert("Failed to add assignment");
+                    }
+                    console.log(data);
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        } catch (error) {
+            btn1.disabled = false; btn2.disabled = false;
+            console.error(error);
+        } finally {
+            btn1.disabled = false; btn2.disabled = false;
+        }
+    </script>
+ 
+
+{% endblock %}

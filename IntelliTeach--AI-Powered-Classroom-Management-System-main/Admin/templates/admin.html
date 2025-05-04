@@ -1,0 +1,136 @@
+{% extends 'admin-layout.html' %}
+
+{% block content %}
+
+<div class="flex py-4 flex-wrap justify-center lg:justify-between space-y-4 sm:space-x-2 sm:space-y-0 lg:space-x-6">
+  <div
+  class="w-60 lg:ml-5 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+  <a href="{% url "student" %}" class="h-60 w-60 relative flex justify-end flex-col">
+        <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+              <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0zm0 416c-88.4 0-160-71.6-160-160S135.6 96 224 96s160 71.6 160 160-71.6 160-160 160zm0-288c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 224c-52.9 0-96-43.1-96-96s43.1-96 96-96 96 43.1 96 96-43.1 96-96 96z"/>
+              </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Add
+                  Students</p>
+          </div>
+      </a>
+  </div>
+
+  <div
+  class="w-60 lg:ml-5 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+  <a href="{% url "teachers_list" %}" class="h-60 relative w-60 flex justify-end flex-col">
+    <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+      <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+        <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+    </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+            <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0zm0 416c-88.4 0-160-71.6-160-160S135.6 96 224 96s160 71.6 160 160-71.6 160-160 160zm0-288c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 224c-52.9 0-96-43.1-96-96s43.1-96 96-96 96 43.1 96 96-43.1 96-96 96z"/>
+              </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Add Teachers</p>
+          </div>
+      </a>
+  </div>
+  <div data-bs-toggle="modal" data-bs-target="#allNotices" 
+  class="w-60 lg:ml-5 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+  <a href="#" class="h-60 relative w-60 flex justify-end flex-col">
+          <div data-bs-toggle="modal" data-bs-target="#addNotice" class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div>
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+            <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0zm0 416c-88.4 0-160-71.6-160-160S135.6 96 224 96s160 71.6 160 160-71.6 160-160 160zm0-288c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 224c-52.9 0-96-43.1-96-96s43.1-96 96-96 96 43.1 96 96-43.1 96-96 96z"/>
+              </svg>
+            <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">All Notice</p>
+          </div>
+      </a>
+  </div>
+
+
+  <div 
+  class="w-60 lg:ml-5 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+  <a href="{% url "time_table" %}" class="h-60 w-60 relative flex justify-end flex-col">
+        <!-- <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div> -->
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+              <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0zm0 416c-88.4 0-160-71.6-160-160S135.6 96 224 96s160 71.6 160 160-71.6 160-160 160zm0-288c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 224c-52.9 0-96-43.1-96-96s43.1-96 96-96 96 43.1 96 96-43.1 96-96 96z"/>
+              </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Time Table</p>
+          </div>
+      </a>
+  </div>
+
+  <div
+  class="w-60 lg:ml-5 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+  <a href="{% url "update_time_table" %}" class="h-60 w-60 relative flex justify-end flex-col">
+        <!-- <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div> -->
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+              <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0zm0 416c-88.4 0-160-71.6-160-160S135.6 96 224 96s160 71.6 160 160-71.6 160-160 160zm0-288c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 224c-52.9 0-96-43.1-96-96s43.1-96 96-96 96 43.1 96 96-43.1 96-96 96z"/>
+              </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Update Time Table</p>
+          </div>
+      </a>
+  </div>
+
+  <div
+  class="w-60 lg:ml-5 h-60 group/ls !bg-blue-200 mb-4 hover:!bg-slate-900 transition-all duration-700 dark:!bg-slate-900 !rounded-2xl hover:!shadow-lg">
+  <a href="{% url "attendance" %}" class="h-60 w-60 relative flex justify-end flex-col">
+        <!-- <div class="absolute w-7 h-7 p-1 group-hover/ls:bg-white bg-slate-900 rounded-full top-3 right-3" >
+            <svg class="w-5 h-5 dark:text-gray-10 bg-transparent text-white group-hover/ls:!text-slate-900"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+              <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+          </div> -->
+          <div class="flex px-4 mb-4 space-y-6 flex-col">
+              <svg class="w-24 h-24 dark:text-gray-400 group-hover/ls:!text-white text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M224 0C100.3 0 0 100.3 0 224s100.3 224 224 224 224-100.3 224-224S347.7 0 224 0zm0 416c-88.4 0-160-71.6-160-160S135.6 96 224 96s160 71.6 160 160-71.6 160-160 160zm0-288c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 224c-52.9 0-96-43.1-96-96s43.1-96 96-96 96 43.1 96 96-43.1 96-96 96z"/>
+              </svg>
+              <p class="font-bold dark:text-gray-400 group-hover/ls:!text-white text-gray-900">Attendance</p>
+          </div>
+      </a>
+  </div>
+
+</div>
+
+<div class="modal fade" id="allNotices" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateStudentLable" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="updateStudentLable">All Notices</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        {% for notice in notices %}
+          <div class="modal-body">
+              <div class="flex flex-col space-y-4">
+                <div class="flex justify-between relative rounded-lg px-4 pr-10 py-1 shadow-md mb-2">
+                  <p class="text-sm font-bold">{{ notice.title }}</p>
+                  <p class="text-xs mr-2 text-gray-400">{{ notice.created_at }}</p>
+                  <a href="{% url 'delete_notice' notice.id %}" class="text-xs text-red-700">Delete</a>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+        <div class="modal-footer">
+            <button type="button" data-bs-dismiss="modal" class="flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Close</button>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

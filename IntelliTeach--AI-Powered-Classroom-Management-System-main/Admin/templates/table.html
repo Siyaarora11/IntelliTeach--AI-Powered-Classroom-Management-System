@@ -1,0 +1,76 @@
+{% extends 'admin-layout.html' %}
+
+{% block content %}
+
+<div class="p-3 mb-5 bg-white rounded-2xl">
+    <div class="mb-3 flex justify-between items-center">
+        <h4 class="text-base font-semibold">Time Table</h4>
+        {% if user.is_hod %}
+        <div class="flex items-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateTable">
+            Add
+        </button>
+        <a href="{% url 'update_time_table' %}" class="btn ml-4 btn-primary">Update</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="table-responsive">
+        {{ html_table | safe }}
+    </div>
+</div>
+
+{% if user.is_hod %}
+<div class="modal fade" id="updateTable" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Time Table</h1>
+                {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button> {%endcomment %}
+            </div>
+            <div class="modal-body">
+                <form id="saveTable" enctype="multipart/form-data" method="POST" action="{% url 'time_table' %}">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="day">Day</label>
+                        <select class="form-select" id="day" name="day" required>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            {% if weekends %}
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="from">From</label>
+                        <input type="time" class="form-control" id="from" name="from" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="to">to</label>
+                        <input type="time" class="form-control" id="to" name="to" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="subject">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject">
+                    </div>
+
+                    <button id="rBTN2" type="submit" class="btn btn-success">Save</button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button id="rBTN3" type="button" class="btn btn-danger" data-bs-dismiss="modal">Discard</button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
